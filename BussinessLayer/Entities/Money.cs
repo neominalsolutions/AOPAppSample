@@ -76,5 +76,17 @@ namespace BussinessLayer.Entities
     }
 
 
+    public static bool operator <=(Money obj1, Money obj2)
+    {
+
+      return obj1.Amount < obj2.Amount && obj1.Currency == obj2.Currency;
+    }
+
+    public static bool operator >=(Money obj1, Money obj2)
+    {
+
+      return obj1.Amount > obj2.Amount && obj1.Currency == obj2.Currency;
+    }
+
   }
 }
