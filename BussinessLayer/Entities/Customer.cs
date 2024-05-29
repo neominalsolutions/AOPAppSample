@@ -1,6 +1,7 @@
 ﻿using BussinessLayer.SeedWork;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,10 @@ namespace BussinessLayer.Entities
     public string? FirstName { get; init; }
     public string? LastName { get; init; }
 
-    public Account Account { get; init; }
+    public Account MainAccount { get; init; }
+
+    private readonly List<Account> accounts = new List<Account>();
+    public ImmutableList<Account> Accounts => accounts.ToImmutableList();
 
     public string FullName { get
       {
@@ -31,7 +35,7 @@ namespace BussinessLayer.Entities
       ArgumentNullException.ThrowIfNull(lastName);
       FirstName = firstName.Trim();
       LastName = lastName.Trim().ToUpper();
-      Account = Account.Create(accountNumber, "TL");
+      MainAccount = Account.Create(accountNumber, "TL");
     }
 
     /// <summary>
@@ -43,6 +47,27 @@ namespace BussinessLayer.Entities
     public static Customer Create(string firstName,string lastName, string accountNumber)
     {
       return new Customer(firstName, lastName, accountNumber);
+    }
+
+    /// <summary>
+    /// Muüşterinin hesabını kapama işlemi
+    /// Müşteri hesabı, müşteri üzerinden kapatılabilidiğinde Customer Entity Account Entity için Information Expert oldu
+    /// </summary>
+    /// <param name="accountNumber"></param>
+    /// <param name="closeReason"></param>
+    /// <exception cref="Exception"></exception>
+    public void CloseAccount(string accountNumber, string closeReason)
+    {
+      var account = accounts.FirstOrDefault(x => x.AccountNumber == accountNumber);
+
+      if(account is not null)
+      {
+        account.Close(closeReason);
+      }
+      else
+      {
+        throw new Exception("Hesap bulunamdı");
+      }
     }
 
   }

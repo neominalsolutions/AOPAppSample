@@ -16,6 +16,15 @@ namespace BussinessLayer.Entities
     // RDMS sistemlerde Account_Balance_Amount, Account_Balance_Currency Property ile Account entity üzerinden value Objectleri property olarak saklıyoruz. 
     public string AccountNumber { get; init; }
 
+    public string CloseReason { get; private set; }
+
+    public DateTime? ClosedAt { get; private set; }
+
+    public bool Closed { get; private set; }
+
+
+
+
     private List<AccountTransaction> transactions = new List<AccountTransaction>();
 
     // Bu sayede set edilemeyen bir liste tanımı yaptık.
@@ -88,6 +97,13 @@ namespace BussinessLayer.Entities
         transactions.Add(AccountTransaction.Create(type, money));
       }
 
+    }
+
+    public void Close(string closeReason)
+    {
+      CloseReason = closeReason;
+      ClosedAt = DateTime.Now;
+      Closed = true;
     }
 
 

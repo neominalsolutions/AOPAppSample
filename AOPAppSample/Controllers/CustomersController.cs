@@ -14,8 +14,10 @@ namespace AOPAppSample.Controllers
     {
       var customer = Customer.Create(firstName:"Ali", lastName: "Tan", accountNumber:"TR 8500 4563 7895 4563 5001");
 
-      customer.Account.Deposit(Money.Create(10, "TL"));
-      customer.Account.WithDraw(Money.Create(5, "TL"));
+      customer.CloseAccount("TR 8500 4563 7895 4563 5001", "İş Değişikliği");
+
+      customer.MainAccount.Deposit(Money.Create(10, "TL"));
+      customer.MainAccount.WithDraw(Money.Create(5, "TL"));
 
 
       string fName =  customer.FullName;
