@@ -2,6 +2,6 @@
 {
   public interface ITestService
   {
-    void Do(int quantity);
+    void Execute(params string[] @params);
   }
 }
